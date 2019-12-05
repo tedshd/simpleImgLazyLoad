@@ -12,12 +12,11 @@
       lazyImages = [].slice.call(dom.querySelectorAll('img.lazy'));
     var active = false;
 
-    if ('IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window && !option.fallback) {
       observer();
     } else {
       // Possibly fall back to a more compatible method here
-      console.warn('simpleImgLazyLoad: not support IntersectionObserver');
-      failback();
+      fallback();
     }
 
     function observer() {
@@ -68,6 +67,7 @@
         }
       }
 
+      window.addEventListener('load', lazyLoad);
       document.addEventListener('scroll', lazyLoad);
       window.addEventListener('resize', lazyLoad);
       window.addEventListener('orientationchange', lazyLoad);
