@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>simpleimglazyload</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.1/pure-min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script async src="https://emma.pixnet.cc/album/sets/5681828/elements?user=tysh310246&format=json&callback=res"></script>
+<script src="./simpleimglazyload.js"></script>
+<style>
+  section {
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+  li {
+    display: inline-block;
+  }
+  img {
+    max-width: 100%;
+  }
+  div {
+    border-bottom: solid 6px #555;
+    height: 5rem;
+  }
+  .point {
+    background: red;
+  }
+</style>
+</head>
+<body>
+    <section></section>
+</body>
+<script>
+var res = (data) => {
+  console.log(data);
+  for (var i = 0; i < data.elements.length; i++) {
+    var div = document.createElement('div')
+    if (i === 10) {
+      div.classList.add('point');
+    }
+
+    div.innerHTML = `<img class="lazy" src="https://photogrid.app/static/img/d4_image_3x.png" data-src="${data.elements[i].thumb.replace('_s', '_m')}" data-srcset="${data.elements[i].thumb.replace('_s', '_l')} 2x" alt="${data.elements[i].title}">`;
+    document.querySelector('section').appendChild(div)
+  }
+  init()
+}
+
+
+function init() {
+  simpleImgLazyLoad({
+    dom: document.documentElement
+  });
+}
+
+
+</script>
+</html>
